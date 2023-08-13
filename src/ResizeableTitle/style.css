@@ -1,0 +1,14 @@
+.resizable-title{
+  position: relative;
+  user-select: none;
+}
+.resizable-title .resizable-title-handler {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  transform: translateX(50%);
+  z-index: 1;
+  cursor: col-resize;
+}

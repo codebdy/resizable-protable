@@ -1,9 +1,9 @@
-import { ProColumns } from "@ant-design/pro-components"
 import { memo, useCallback, useEffect, useRef, useState } from "react"
 import "./style.css"
+import { ColumnType } from "antd/es/table"
 
-export type ResizableColumn<T = any, ValueType = "text"> = ProColumns<T, ValueType> & {
-  resiable?: boolean,
+export type ResizableColumn<T = any> = ColumnType<T> & {
+  resizable?: boolean,
 }
 
 type StartInfo = {
@@ -13,10 +13,10 @@ type StartInfo = {
 
 export const ResizableTitle = memo((props: {
   className?: string
-  onResize?: (width?: number) => void,
   children?: React.ReactNode,
+  resizable?: boolean,
 }) => {
-  const { className, onResize, children, ...other } = props;
+  const { className, children, resizable, ...other } = props;
   //上一次鼠标x坐标位置
   const [lastX, setLastX] = useState<number>();
   //开始信息
@@ -38,11 +38,10 @@ export const ResizableTitle = memo((props: {
       const diff = e.clientX - start.x
       const width = Math.round(start.width + diff)
       if (width > 10) {
-        ref.current?.style.setProperty("width", `${width}px`)
-        onResize?.(width)
+        ref.current?.setAttribute("width", `${width}px`)
       }
     }
-  }, [onResize])
+  }, [])
 
   //鼠标抬起
   const handleMouseUp = useCallback(() => {
@@ -59,7 +58,9 @@ export const ResizableTitle = memo((props: {
   }, [])
 
   useEffect(() => {
+    //添加鼠标移动事件
     document.addEventListener("mousemove", handleMouseMove)
+    //添加鼠标抬起事件
     document.addEventListener("mouseup", handleMouseUp)
     return () => {
       document.removeEventListener("mousemove", handleMouseMove)
@@ -70,10 +71,12 @@ export const ResizableTitle = memo((props: {
   return (
     <th ref={ref} className={"resizable-title" + (className ? (" " + className) : "")} {...other}>
       {children}
-      <div
-        className="resizable-title-handler"
-        onMouseDown={handleMousDown}
-      />
+      {
+        resizable && <div
+          className="resizable-title-handler"
+          onMouseDown={handleMousDown}
+        />
+      }
     </th>
   )
 })
