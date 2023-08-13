@@ -3,6 +3,7 @@ import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, Dropdown, Input } from 'antd';
 import { memo } from 'react';
+import { ResizableTitle } from './ResizableTitle';
 
 const valueEnum = {
   0: 'close',
@@ -133,6 +134,11 @@ export const Example = memo(() => {
         });
       }}
       rowKey="key"
+      components={{
+        header: {
+          cell: ResizableTitle,
+        },
+      }}
       pagination={{
         showQuickJumper: true,
       }}
