@@ -4,7 +4,7 @@
 }
 
 .resizable-title.resizing {
-  transition: none;
+  transition: none !important;
 }
 
 .resizable-title .resizable-title-handler {
