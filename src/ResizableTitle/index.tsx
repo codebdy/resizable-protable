@@ -20,18 +20,23 @@ export const ResizableTitle = memo((props: {
   const [lastX, setLastX] = useState<number>();
   const [startInfo, setStarInfo] = useState<StartInfo>();
   const ref = useRef<HTMLTableCellElement>(null)
+  const lastXRef = useRef(lastX)
+  lastXRef.current = lastX
+  const startInfoRef = useRef(startInfo)
+  startInfoRef.current = startInfo
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (startInfo?.width && e.clientX !== lastX) {
+    const start = startInfoRef.current
+    if (start?.width && e.clientX !== lastXRef.current) {
       setLastX(e.clientX)
-      const diff = e.clientX - startInfo.x
-      const width = Math.round(startInfo.width + diff)
+      const diff = e.clientX - start.x
+      const width = Math.round(start.width + diff)
       if (width > 10) {
         ref.current?.style.setProperty("width", `${width}px`)
         onResize?.(width)
       }
     }
-  }, [lastX, onResize, startInfo])
+  }, [onResize])
 
   const handleMouseUp = useCallback(() => {
     setStarInfo(undefined)
