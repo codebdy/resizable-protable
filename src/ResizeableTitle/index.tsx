@@ -69,7 +69,11 @@ export const ResizableTitle = memo((props: {
   }, [handleMouseMove, handleMouseUp])
 
   return (
-    <th ref={ref} className={"resizable-title" + (className ? (" " + className) : "")} {...other}>
+    <th ref={ref}
+      className={
+        "resizable-title" + (className ? (" " + className) : "") + (startInfo ? " resizing" : "")
+      }
+      {...other}>
       {children}
       {
         resizable && <div

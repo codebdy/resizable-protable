@@ -1,7 +1,12 @@
-.resizable-title{
+.resizable-title {
   position: relative;
   user-select: none;
 }
+
+.resizable-title.resizing {
+  transition: none;
+}
+
 .resizable-title .resizable-title-handler {
   position: absolute;
   right: 0;
